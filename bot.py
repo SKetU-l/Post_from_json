@@ -29,7 +29,7 @@ message = f"#risingOS #TIRAMISU #ROM #{device}\n" \
           f"<b>Supported Device:</b> {device}\n" \
           f"<b>Released:</b> {release_date}\n" \
           f"<b>Maintainer:</b> <a href=\"{telegram_url}\">{maintainer}</a>\n\n" \
-          f"◾<b>Download:</b> <a href=\"https://github.com/kuroringo90/rising_builds/releases/download/vayu-2023-04-18--01-01-57\">Here</a>\n" \
+          f"◾<b>Download:</b> <a href=\"https://www.pling.com/p/1935891\">Here</a>\n" \
           f"◾<b>Screenshots:</b> <a href=\"https://t.me/riceDroidNews/719\">Here</a>\n" \
           f"◾<b>Changelogs:</b> <a href=\"{source_changelog}\">Source</a> | <a href=\"{device_changelog}\">Device</a>\n" \
           f"◾<b>Support group:</b> <a href=\"https://t.me/riceDroidsupport\">Source</a> | <a href=\"{support_group}\">Device</a>\n\n" \
