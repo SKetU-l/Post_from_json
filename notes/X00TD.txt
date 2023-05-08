@@ -1,0 +1,3 @@
+- Non-FBE, LV, enforcing & 4.4 kernel based build
+- Pie087 & 063 recommended
+- Safetynet pass by default
