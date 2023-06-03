@@ -11,9 +11,9 @@ dp = updater.dispatcher
 
 dp.add_handler(CommandHandler('start', start))
 
-dp.add_handler(CommandHandler('get',get))
+dp.add_handler(CommandHandler('latest',latest))
 
-dp.add_handler(MessageHandler(Filters.command, unknown))
+dp.add_handler(CommandHandler('supported', supported))
 
 updater.start_polling()
 updater.idle()
