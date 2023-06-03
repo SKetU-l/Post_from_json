@@ -1,5 +1,5 @@
-This is a simple python code that makes telegram post from OTA json file.
+This is my personal project and thanks to @mirroracctwo for the first support and help
 
-For now only rising os supported.
+This isn't only a JSON bot this will do so many works that I will include in future
 
-This isn't active bot it works by GitHub workflow.
+This is now a active bot so no need GitHub workflow anymore
