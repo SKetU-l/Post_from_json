@@ -1,5 +1,5 @@
 This is my personal project and thanks to @mirroracctwo for the first support and help
 
-This isn't only a JSON bot this will do so many works that I will include in future
+For now Bot support some functions like post from json , yt-dlp function, shell option and some besic functions like /ping,/start and blah blah
 
-This is now a active bot so no need GitHub workflow anymore
+This is a active bot
