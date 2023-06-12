@@ -1,2 +1,2 @@
 #!/bin/bash
-gunicorn app:app & python3 bot.py
+apt install ffmpeg -y && gunicorn app:app && python3 bot.py
