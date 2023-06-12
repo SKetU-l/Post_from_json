@@ -1,2 +1,2 @@
 #!/bin/bash
-exec gunicorn app:app && nohup python3 bot.py
+gunicorn app:app & python3 bot.py
