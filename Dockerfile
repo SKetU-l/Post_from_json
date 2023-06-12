@@ -4,6 +4,8 @@ COPY req.txt .
 
 RUN pip install --no-cache-dir -r req.txt
 
+RUN apt install ffmpeg -y
+
 RUN wget -O /usr/local/bin/yt-dlp https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp && \
     chmod a+rx /usr/local/bin/yt-dlp
 
