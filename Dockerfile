@@ -1,6 +1,4 @@
-FROM python:3.10-alpine
-
-RUN pip install --upgrade pip
+FROM python:buster
 
 COPY req.txt .
 
