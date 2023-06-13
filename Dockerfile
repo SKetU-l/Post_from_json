@@ -13,4 +13,6 @@ COPY . .
 
 RUN chmod +x run.sh
 
+EXPOSE 443/tcp
+
 ENTRYPOINT ["/bin/sh", "./run.sh"]
