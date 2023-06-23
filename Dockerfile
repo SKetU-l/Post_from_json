@@ -1,10 +1,10 @@
-FROM python:3.10-alpine
+FROM python:buster
 
 COPY req.txt .
 
 RUN pip install --no-cache-dir -r req.txt
 
-RUN apk add --no-cache ffmpeg
+RUN apt update -y && apt install ffmpeg -y
 
 RUN wget -O /usr/local/bin/yt-dlp https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp && \
     chmod a+rx /usr/local/bin/yt-dlp
