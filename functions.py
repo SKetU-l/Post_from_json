@@ -8,18 +8,17 @@ import datetime
 from telegram import *
 from telegram.ext import *
 from time import *
-from dotenv import load_dotenv
+
+start_time = datetime.datetime.now()
 
 def start(update, context):
-    if 'start_time' not in context.chat_data:
-        context.chat_data['start_time'] = datetime.datetime.now()
     now = datetime.datetime.now()
-    active_duration = now - context.chat_data['start_time']
+    active_duration = now - start_time
     days = active_duration.days
     hours, remainder = divmod(active_duration.seconds, 3600)
     minutes, _ = divmod(remainder, 60)
-    message = f"Hello, I am ALIVE\n\nDoing slavery since:<b>{days}d:{hours}h:{minutes}m</b>"
-    context.bot.send_message(chat_id=update.effective_chat.id, text=message, reply_to_message_id=update.message.message_id, parse_mode=ParseMode.HTML)
+    message = f"Hello, I am ALIVE\n\nDoing SLAVERY Since: <b>{days}d:{hours}h:{minutes}m</b>"
+    context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode=ParseMode.HTML, reply_to_message_id=update.message.message_id)
 
 def supported(update: Update, context: CallbackContext):
     rising = "/latest rising"
@@ -111,12 +110,10 @@ def ping(update: Update, context: CallbackContext):
 def shell(update, context):
     authorized_users = os.environ.get("SUDO", "").split(",")
     user_id = str(update.effective_user.id)
-
     if user_id not in authorized_users:
         message = f"You are not sudo user."
         update.message.reply_html(message, reply_to_message_id=update.message.message_id)
         return
-
     message = update.message
     cmd = message.text.split(maxsplit=1)
     if len(cmd) == 1:
@@ -138,12 +135,23 @@ def shell(update, context):
         message = "An error occurred while processing the command."
         update.message.reply_html(message, reply_to_message_id=update.message.message_id)
 
-def ytdl(update, context):
+def logs(update, context):
+    authorized_users = os.environ.get("SUDO", "").split(",")
+    user_id = str(update.effective_user.id)
+    if user_id not in authorized_users:
+        message = f"You are not sudo user."
+        update.message.reply_html(message, reply_to_message_id=update.message.message_id)
+        return
+    command = "tail -n 30 nohup.out"
+    output = subprocess.check_output(command, shell=True, text=True)
+    context.bot.send_message(chat_id=update.effective_chat.id, text=output, reply_to_message_id=update.message.message_id)
+
+def vdl(update, context):
     authorized = os.environ.get("AUTHORISED", "").split(",")
     chat_id = str(update.effective_chat.id)
     user_id = str(update.effective_user.id)
     message_text = update.message.text
-    video_formats = ["https://youtu.be", "https://www.youtube.com", "https://youtube.com/shorts", "http://www.youtube.com", "www.youtube.com", "https://www.instagram.com", "http://www.instagram.com", "www.instagram.com", "https://pin.it", "https://vm.tiktok.com"]
+    video_formats = ["https://youtu.be", "https://www.youtube.com", "https://youtube.com/shorts", "http://www.youtube.com", "www.youtube.com", "https://www.instagram.com", "http://www.instagram.com", "www.instagram.com", "https://pin.it", "https://vm.tiktok.com", "https://twitter.com"]
     if chat_id not in authorized and user_id not in authorized:
         return
     for format in video_formats:
@@ -154,7 +162,7 @@ def ytdl(update, context):
                 download(video_link, context, update.message.chat_id, update.message.message_id, update, shared_by)
                 break
             except subprocess.CalledProcessError as e:
-                update.message.message(f"An error occurred: {e}", reply_to_message_id=update.message.message_id)
+                context.bot.send_message(chat_id=chat_id, text=f"An error occurred: {e}", reply_to_message_id=update.message.message_id)
 
 def shared(user):
     return user.first_name
@@ -167,6 +175,7 @@ def extract(text, base_url):
     return text[start_index:end_index]
 
 def download(video_link, context, chat_id, reply_to_message_id, update, shared_by):
+    message = context.bot.send_message(chat_id=chat_id, text="Processing the video. Please wait...", reply_to_message_id=reply_to_message_id)
     subprocess.run(['yt-dlp', '-f', 'bestvideo[height<=480][ext=mp4]+bestaudio[ext=m4a]/best[height<=480][ext=mp4]/best[ext=mp4]', video_link], check=True)
     video_filename = file()
     file_size = os.path.getsize(video_filename)
@@ -176,12 +185,12 @@ def download(video_link, context, chat_id, reply_to_message_id, update, shared_b
         context.bot.send_message(chat_id=chat_id, text=message, reply_to_message_id=reply_to_message_id)
         os.remove(video_filename)
         return
-
     title = ' '.join(word for word in os.path.splitext(os.path.basename(video_filename))[0].split() if not word.startswith('['))
     caption = f"<b>{title}</b>\n\nshared by <b>{shared_by}</b>"
     with open(video_filename, 'rb') as video_file:
         context.bot.send_video(chat_id=chat_id, video=InputFile(video_file), reply_to_message_id=reply_to_message_id, caption=caption, parse_mode=ParseMode.HTML, timeout=120)
     os.remove(video_filename)
+    context.bot.delete_message(chat_id=chat_id, message_id=message.message_id)
 
 def file():
     files = sorted(os.listdir('.'), key=os.path.getctime, reverse=True)
@@ -189,3 +198,7 @@ def file():
         if file.endswith('.mp4'):
             return file
     return None
+
+def source(update, context):
+    message = f"<b>Intrested in source?</b>\n<a href=\"https://github.com/SKetU-l/mikupeice_robot.git\">Get here</a>"
+    update.message.reply_html(message, reply_to_message_id=update.message.message_id, disable_web_page_preview=True)
