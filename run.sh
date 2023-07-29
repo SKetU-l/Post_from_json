@@ -1,2 +1,1 @@
-#!/bin/bash
-exec nohup python3 bot.py
+gunicorn app:app & python3 bot.py >> nohup.out

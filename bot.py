@@ -18,6 +18,7 @@ dp.add_handler(CommandHandler('supported', supported))
 dp.add_handler(CommandHandler('shell', shell))
 dp.add_handler(CommandHandler('logs', logs))
 dp.add_handler(CommandHandler('source', source))
+dp.add_handler(CommandHandler('help', help))
 dp.add_handler(MessageHandler(Filters.text & (~Filters.command), vdl))
 
 updater.start_polling()

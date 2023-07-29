@@ -20,6 +20,17 @@ def start(update, context):
     message = f"Hello, I am ALIVE\n\nDoing SLAVERY Since: <b>{days}d:{hours}h:{minutes}m</b>"
     context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode=ParseMode.HTML, reply_to_message_id=update.message.message_id)
 
+def help(update, context):
+    message = update.message
+    reply_text = """Available commands:
+• /ping --> to see response time.
+• /start --> to get started.
+• /latest --> to see latest roms from me.
+• /source --> to see this bot source code.
+• /shell --> to run shell commands (limited users only).
+• Also yt-dlp function to download video from it's direct link (It will only work on authorised groups or chats)."""
+    message.reply_markdown(reply_text, reply_to_message_id=message.message_id)
+
 def supported(update: Update, context: CallbackContext):
     rising = "/latest rising"
     awaken = "/latest awaken"
@@ -71,7 +82,7 @@ def f2(data, source_changelog, device_changelog):
     version = data['response'][0]['version']
     support_group = data['response'][0]['forum']
 
-    message = f"rising v{version} | Official | Android 13\n" \
+    message = f"risingOS {version} | Official | Android 13\n" \
               f"<b>Supported Device:</b> {device}\n" \
               f"<b>Maintainer:</b> @SKetUl\n\n" \
               f"<b>Download:</b> <a href=\"https://www.pling.com/p/1935891\">Here</a>\n" \
@@ -94,7 +105,7 @@ def f4(device, source_changelog, download):
               f"<b>Maintainer:</b> @SKetUl\n\n" \
               f"<b>Download:</b> <a href=\"{download}\">Here</a>\n" \
               f"<b>Changelogs:</b> <a href=\"{source_changelog}\">Source</a>\n" \
-              f"<b>Support group:</b> <a href=\"https://t.me/X00TDDISC\">Device</a>\n\n" \
+              f"<b>Support group:</b> <a href=\"https://t.me/SKetUs_OT\">Device</a>\n\n" \
               f"<b>Notes:</b>\n- Non-FBE, LV, enforcing & 4.4 kernel based build\n- Safetynet pass by default\n\n"
 
     return message
@@ -165,7 +176,7 @@ def vdl(update, context):
                 context.bot.send_message(chat_id=chat_id, text=f"An error occurred: {e}", reply_to_message_id=update.message.message_id)
 
 def shared(user):
-    return user.first_name
+    return user.username
 
 def extract(text, base_url):
     start_index = text.find(base_url)
@@ -186,7 +197,7 @@ def download(video_link, context, chat_id, reply_to_message_id, update, shared_b
         os.remove(video_filename)
         return
     title = ' '.join(word for word in os.path.splitext(os.path.basename(video_filename))[0].split() if not word.startswith('['))
-    caption = f"<b>{title}</b>\n\nshared by <b>{shared_by}</b>"
+    caption = f"<b>{title}</b>\n\nshared by <b>@{shared_by}</b>"
     with open(video_filename, 'rb') as video_file:
         context.bot.send_video(chat_id=chat_id, video=InputFile(video_file), reply_to_message_id=reply_to_message_id, caption=caption, parse_mode=ParseMode.HTML, timeout=120)
     os.remove(video_filename)
@@ -200,5 +211,5 @@ def file():
     return None
 
 def source(update, context):
-    message = f"<b>Intrested in source?</b>\n<a href=\"https://github.com/SKetU-l/mikupeice_robot.git\">Get here</a>"
+    message = f"<b>Intrested in source?</b>\n<a href=\"https://github.com/SKetU-l/mikupeice_robot.git\"><b>Get here</b></a>"
     update.message.reply_html(message, reply_to_message_id=update.message.message_id, disable_web_page_preview=True)
