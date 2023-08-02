@@ -6,7 +6,7 @@ WORKDIR /app/
 
 COPY . .
 
-EXPOSE 8080 443
+EXPOSE 8080
 
 RUN apt update -y && apt upgrade -y && \
     apt install -y ffmpeg && \
