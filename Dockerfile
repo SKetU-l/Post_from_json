@@ -8,8 +8,8 @@ COPY . .
 
 EXPOSE 8080 443
 
-RUN apt update -y && apt upgrade -y \
-    apt install ffmpeg -y && \
+RUN apt update -y && apt upgrade -y && \
+    apt install -y ffmpeg && \
     pip install --no-cache-dir -r req.txt && \
     chmod +x run.sh
 
