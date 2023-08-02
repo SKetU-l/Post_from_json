@@ -1,18 +1,18 @@
 FROM python:buster
 
-COPY req.txt .
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN pip install --no-cache-dir -r req.txt
-
-RUN apt update -y && apt install ffmpeg -y
-
-RUN wget -O /usr/local/bin/yt-dlp https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp && \
-    chmod a+rx /usr/local/bin/yt-dlp
+WORKDIR /app/
 
 COPY . .
 
-RUN chmod +x run.sh
+EXPOSE 8080 443
 
-EXPOSE 443/tcp
+RUN apt update -y && apt upgrade -y \
+         apt install ffmpeg -y && \
+         pip install --no-cache-dir -r req.txt && \
+         wget -O /usr/local/bin/yt-dlp https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp && \
+         chmod a+rx /usr/local/bin/yt-dlp && \
+         chmod +x run.sh
 
 ENTRYPOINT ["/bin/sh", "./run.sh"]

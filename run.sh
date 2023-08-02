@@ -1,2 +1,2 @@
 #!/bin/bash
-gunicorn app:app & python3 bot.py
+python3 server.py & python3 bot.py
