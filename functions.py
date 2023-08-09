@@ -162,7 +162,7 @@ def vdl(update, context):
     chat_id = str(update.effective_chat.id)
     user_id = str(update.effective_user.id)
     message_text = update.message.text
-    video_formats = ["https://youtu.be", "https://www.youtube.com", "https://youtube.com/shorts", "http://www.youtube.com", "www.youtube.com", "https://www.instagram.com", "http://www.instagram.com", "www.instagram.com", "https://pin.it", "https://vm.tiktok.com", "https://twitter.com"]
+    video_formats = ["https://youtu.be", "https://www.youtube.com", "https://youtube.com/shorts", "http://www.youtube.com", "www.youtube.com", "https://www.instagram.com", "http://www.instagram.com", "https://pin.it", "https://vm.tiktok.com", "https://twitter.com"]
     if chat_id not in authorized and user_id not in authorized:
         return
     for format in video_formats:
